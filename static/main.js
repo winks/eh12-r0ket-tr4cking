@@ -147,6 +147,7 @@ $(function() {
     function updateR0kets( Tags ) {
 
         var tmpFloor = {};
+        var filterR0kets = {};
 
         // Iterate over each tag
         $.each( Tags, function( Key, Value ) {
@@ -166,6 +167,8 @@ $(function() {
                 $visual.append( r0ketSilo[ id ].getDOM() );
             }
 
+            filterR0kets[ id ] = true;
+
             var Radar = Radars[ readerId ];
             var Floor = Radar.getFloor();
 
@@ -180,6 +183,17 @@ $(function() {
             curTag.updatePosition( Value.px, Value.py );
             curTag.setRadar( Radar );
 
+        });
+
+        // Remove non existing rokets
+        $.each( r0ketSilo, function( Key, Value ) {
+            if( !filterR0kets[ Key ] ) {
+
+                r0ketSilo[ Key ].getDOM().fadeOut( 2000, function() {
+                    $(this).remove();
+                    delete r0ketSilo[ Key ];
+                });
+                            }
         });
 
         Floors = tmpFloor;
@@ -219,7 +233,7 @@ $(function() {
             var x   = map_range( pos.x, 0, Config.dataMaxX, 0, Config.canvasMaxX );
             var y   = map_range( pos.y, 0, Config.dataMaxY, 0, Config.canvasMaxY );
 
-            var title = 'Radar: '+radar.getId()+ ' - Floor: ' +radar.getFloor();
+            var title = 'R0ket: '+Id+ ' - Floor: ' +radar.getFloor();
 
             r0ket.getDOM()
                     .animate({'left': Config.canvasMaxX-x, 'top': Config.canvasMaxY-y }, Config.updateInterval )
@@ -233,7 +247,6 @@ $(function() {
             dbg += 'On Floor '+f+' are '+Floors[f]+' r0kets<br>';
         }
 
-        console.log(dbg);
         $dbg.html(dbg);
 
     }
