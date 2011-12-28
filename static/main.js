@@ -18,206 +18,54 @@ var Config = {
     'updateInterval':   500
 }
 
-var $lifeform = $('<div/>');
-$lifeform.addClass('lifeform');
-
-var $radar = $('<div/>');
-$radar.addClass('radar');
-
-var $floor = $('<checkbox/>');
-$floor.addClass('floor');
-
-function r0ket( Id, X, Y ) {
-
-    this.Id = Id;
-    this.Radar = null;
-
-    this.posY = X | 0;
-    this.posX = Y | 0;
-
-    this.lastUpdate = null;
-
-    this.$DOM = $lifeform.clone();
-    this.$DOM.css({'left': Config.canvasMaxX-this.posX, 'top': Config.canvasMaxY-this.posY});
-
-
-    this.updatePosition = function ( X, Y, UpdateTime ) {
-        this.posX = X;
-        this.posY = Y;
-        this.lastUpdate = UpdateTime || Math.floor(new Date().getTime() / 1000);
-    }
-
-    this.setRadar = function ( Radar ) {
-        this.Radar = Radar;
-    }
-
-    this.getPosition  = function () {
-        return { 'x': this.posX, 'y': this.posY };
-    }
-
-    this.getRadar = function () {
-        return this.Radar;
-    }
-
-    this.getDOM = function() {
-        return this.$DOM;
-    }
-
-}
-
-function Radar( Id, Floor, X, Y, Room ) {
-
-    this.Id     = Id;
-    this.Floor  = Floor;
-    this.posX   = X;
-    this.posY   = Y;
-    this.Room   = Room | 0;
-
-
-    this.$DOM = $radar.clone();
-    this.$DOM.css({'left': Config.canvasMaxX-this.posX-55, 'top': Config.canvasMaxY-this.posY-55});
-
-
-    this.getFloor = function() { return this.Floor; }
-    this.getRoom  = function() { return this.Room;  }
-    this.getId    = function() { return this.Id;    }
-
-    this.getPosition = function() {
-        return { 'x': this.posX, 'y': this.posY };
-    }
-
-    this.getDOM = function() {
-        return this.$DOM;
-    }
-
-
-}
-
 $(function() {
 
-  //  var ctx = $('#paper')[0].getContext("2d");
+    var objCmd = new CommandCenter;
 
     var $visual = $('#visual');
     $visual.width   ( Config.canvasMaxX );
     $visual.height  ( Config.canvasMaxY );
 
-    var $dbg = $('#dbg');
-
     var lock = false;
 
-    function retrieveData() {
+    // Interval to update Data
+    setInterval( function() {
 
+        // Check if a lock exists to prevent concurrent AJAX's
         if( lock ) {
             return false;
         }
 
+        // Set lock and register a timeout to remove lock after a specific timeout
         lock = true;
-
-        $.get('debug/proxy.php', {'rnd': Math.random() }, function( Data ) {
+        var releaseLock = setTimeout( function() {
             lock = false;
+        }, 3000 );
+
+        // Run ajax with random get parameter to prevent caching from browser
+        $.get('debug/proxy.php', {'rnd': Math.random() }, function( Data ) {
+
+            // Remove lock if data is received
+            lock = false;
+            clearTimeout( releaseLock );
+
+            // If data is set, update Commandcenter
             if( Data ) {
-                updateData( Data );
+                objCmd.update( Data );
             }
+
         }, 'json' );
-    }
+
+    }, Config.updateInterval );
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // UPDATE Datas
+    setInterval( function() {
 
-    function updateData( Data ) {
+        console.log( objCmd.getR0kets() );
+        console.log( objCmd.getRadars() );
 
-        // UPDATE ALL THE RADARS
-        if( Data.reader ) {
-            updateRadars( Data.reader );
-        }
-
-        // If tag datapoint exists, UPDATE ALL THE R0KETS!
-        if( Data.tag ) {
-            updateR0kets( Data.tag );
-        }
-
-
-        drawItems();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // UPDATE r0ket-Silos
-
-    function updateR0kets( Tags ) {
-
-        var tmpFloor = {};
-        var filterR0kets = {};
-
-        // Iterate over each tag
-        $.each( Tags, function( Key, Value ) {
-
-            var id = Value.id;
-
-            // Resolve matching radar
-            var readerId = Value.reader;
-            if( !Radars[ readerId ] ) {
-                console.error('WTF? R0ket is attached to an reader that doesnt exist.');
-                return;
-            }
-
-            // Create instance of r0ket, if not exists
-            if( !r0ketSilo[ id ] ) {
-                r0ketSilo[ id ] = new r0ket( id, Value.px, Value.py );
-                $visual.append( r0ketSilo[ id ].getDOM() );
-            }
-
-            filterR0kets[ id ] = true;
-
-            var Radar = Radars[ readerId ];
-            var Floor = Radar.getFloor();
-
-            if( !tmpFloor[ Floor ] ) {
-                tmpFloor[ Floor ] = 1;
-            } else {
-                tmpFloor[ Floor ]++;
-            }
-
-            // Update position of r0ket, set Radar
-            var curTag = r0ketSilo[ id ];
-            curTag.updatePosition( Value.px, Value.py );
-            curTag.setRadar( Radar );
-
-        });
-
-        // Remove non existing rokets
-        $.each( r0ketSilo, function( Key, Value ) {
-            if( !filterR0kets[ Key ] ) {
-
-                r0ketSilo[ Key ].getDOM().fadeOut( 2000, function() {
-                    $(this).remove();
-                    delete r0ketSilo[ Key ];
-                });
-                            }
-        });
-
-        Floors = tmpFloor;
-
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // UPDATE Radars
-
-    function updateRadars( dRadar ) {
-
-        var tmp = null;
-        for( var Id in dRadar ) {
-
-            tmp = dRadar[ Id ];
-
-            if( !Radars[ tmp.id ] ) {
-                Radars[ tmp.id ] = new Radar( tmp.id, tmp.floor, tmp.px, tmp.py, tmp.room );
-                $visual.append( Radars[ tmp.id ].getDOM() );
-            }
-
-        }
-    }
-
+    }, 2000 );
+/*
 
     function drawItems() {
 
@@ -251,10 +99,6 @@ $(function() {
 
     }
 
-
-    setInterval( function() {
-        retrieveData();
-    }, Config.updateInterval );
-
+*/
 
 });
