@@ -1,0 +1,7 @@
+Copy everything to a webserver running PHP (you need php5-curl as module)
+
+You can write your own proxy in a language you want... the tracking is completely in Javascript.
+The proxy is only needed to retrieve data from another domain (Cross Domain Policy)
+
+
+hf.
