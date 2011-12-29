@@ -63,6 +63,8 @@ $(function() {
                 objCmd.update( Data );
             }
 
+            drawCanvas();
+
         }, 'json' );
 
     }, Config.updateInterval );
@@ -110,7 +112,12 @@ $(function() {
         img.src = file;
     }
 
-    setInterval( function() {
+    // add a clickelement to all coming
+    $('.floor-switch').live('click', function() {
+        drawCanvas();
+    });
+
+    function drawCanvas () {
 
         // CLEAR ALL THE CANVAS
         ctx.clearRect( 0, 0, Config.canvasMaxX, Config.canvasMaxY );
@@ -200,7 +207,7 @@ $(function() {
         }
 
 
-    }, 1000 );
+    }
 
 
 });
