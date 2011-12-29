@@ -66,4 +66,12 @@ function Floor( name ){
         return Display;
     };
     
+    /**
+     * Return the name
+     * @return string or int
+     */
+    this.getName = function() {
+        return that.name;
+    };
+    
 };
