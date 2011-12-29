@@ -155,6 +155,7 @@ $(function() {
                 var pos = r0kets[ r ].getPosition();
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
+                ctx.moveTo( map.x, map.y );
                 ctx.arc( map.x, map.y, 8, 0, Math.PI*2, true);
                 if( r0kets[ r ].getNick() ) {
                     ctx.fillText( r0kets[ r ].getNick() , map.x+20, map.y+5);
@@ -174,6 +175,7 @@ $(function() {
                 var pos = radars[ i ].getPosition();
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
+                ctx.moveTo( map.x, map.y );
                 ctx.arc( map.x, map.y, 12, 0, Math.PI*2, true);
             }
 
