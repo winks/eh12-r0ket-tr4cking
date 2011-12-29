@@ -77,9 +77,13 @@ function CommandCenter() {
             tmpR0kets[ r0ketId ].updatePosition( Datapoint.px, Datapoint.py );
             tmpR0kets[ r0ketId ].setRadar( Radar );
 
-
+            // Count r0kets on each floor
             var floor = tmpR0kets[ r0ketId ].getFloor();
-            (tmpFloors[ floor ]++)?0:tmpFloors[ floor ]=1;
+            if( !tmpFloors[ floor ] ) {
+                tmpFloors[ floor ] = 1;
+            } else {
+                tmpFloors[ floor ]++;
+            }
 
         }
 
