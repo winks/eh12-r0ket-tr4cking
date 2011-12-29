@@ -12,7 +12,7 @@ function CommandCenter() {
     this.floors = {};
     this.floorcounts = {};
     var that   = this;
-    var floorcontroller=new FloorController();
+    var floorview=new FloorView();
 
     /**
      * Public update method, if new data is available
@@ -120,7 +120,7 @@ function CommandCenter() {
         // in case that anything changes
         that.radars = tmpRadars;
         that.floors = tmpFloors;
-        floorcontroller.update(that.floors);
+        floorview.update(that.floors);
     };
 
     /**
