@@ -10,9 +10,9 @@ function CommandCenter() {
     this.r0kets = {};
     this.radars = {};
     this.floors = {};
-    this.floorcounts = {};
-    var that   = this;
-    var floorview=new FloorView();
+
+    var that        = this;
+    var floorview   = new FloorView();
 
     /**
      * Public update method, if new data is available

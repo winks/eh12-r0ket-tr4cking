@@ -74,7 +74,6 @@ $(function() {
     var stalkId = 89203649;
     $('#r0ketid').change( function() {
         stalkId = parseInt( $(this).val() , 16 );
-        console.log(stalkId);
     });
 
     // Retrieve canvas element, and set its size as attribute
@@ -132,7 +131,6 @@ $(function() {
         var floor  = null, r0kets = [], radars = [], map = {};
         var floors = objCmd.getFloors();
 
-        console.log( floors );
      //   floors[1].setDisplay( false );
       //  floors[2].setDisplay( true );
       //  floors[3].setDisplay( false );
@@ -172,7 +170,11 @@ $(function() {
             for( var i in radars ) {
                 var pos = radars[ i ].getPosition();
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
+
                 ctx.arc( map.x, map.y, 12, 0, Math.PI*2, true);
+                if( radars[ i ].getNick() ) {
+                    ctx.fillText( radars[ i ].getNick() , map.x+20, map.y+5);
+                }
             }
 
             ctx.closePath();

@@ -1,3 +1,9 @@
+/**
+ * User: schinken
+ * Date: 12/29/11
+ * Time: 10:33 PM
+ */
+
 function Floor( name ){
 
     var that        =   this;
