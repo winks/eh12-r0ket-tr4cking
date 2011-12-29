@@ -14,13 +14,13 @@ function CommandCenter() {
     var that   = this;
 
     /**
-     * Public update method
+     * Public update method, if new data is available
      * @param Data
      */
 
     this.update = function( Data ) {
 
-        // UPDATE ALL THE RADARS
+        // UPDATE ALL THE RADARS first, for consitency checks for the rockts
         if( Data.reader ) {
             updateRadars( Data.reader );
         }
@@ -69,6 +69,7 @@ function CommandCenter() {
                 tmpR0kets[ r0ketId ] = new r0ket( r0ketId, Datapoint.px, Datapoint.py );
             }
 
+            // Here i can rely that radarId exists due to previous checks
             var Radar = that.getRadar( radarId );
 
             // Update position of r0ket, set Radar

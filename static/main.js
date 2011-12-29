@@ -63,16 +63,49 @@ $(function() {
      * Render loop
      */
 
-    var floors = {};
-    var r0kets = {};
-    var radars = {};
+    var $paper  = $('#paper');
+
+    $paper.attr ( {
+        'width':    Config.canvasMaxX,
+        'height':   Config.canvasMaxY
+    } );
+
+    var ctx     = $paper[0].getContext('2d');
+
 
     setInterval( function() {
 
-        console.log( objCmd.getR0kets() );
-        console.log( objCmd.getRadars() );
+        ctx.clearRect( 0, 0, Config.canvasMaxX, Config.canvasMaxY );
 
-    }, 2000 );
+        console.log("Redrawing...", ctx );
+
+        var r0kets = objCmd.getR0kets();
+        var radars = objCmd.getRadars();
+
+        ctx.fillStyle = "#00A308";
+
+        ctx.beginPath();
+
+        for( var i in radars ) {
+            var pos = radars[ i ].getPosition();
+            ctx.arc( pos.x, pos.y, 12, 0, Math.PI*2, true);
+        }
+
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#FF0000";
+        ctx.beginPath();
+
+        for( var i in r0kets ) {
+            var pos = r0kets[ i ].getPosition();
+            ctx.arc( pos.x, pos.y, 8, 0, Math.PI*2, true);
+        }
+
+        ctx.closePath();
+        ctx.fill();
+
+    }, 1000 );
 /*
 
     function drawItems() {
