@@ -79,7 +79,7 @@ function CommandCenter() {
 
 
             var floor = tmpR0kets[ r0ketId ].getFloor();
-            tmpFloors[ floor ]++;
+            (tmpFloors[ floor ]++)?0:tmpFloors[ floor ]=1;
 
         }
 
