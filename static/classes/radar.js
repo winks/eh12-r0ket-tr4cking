@@ -6,11 +6,10 @@
 
 function Radar( Id, Floor, X, Y, Room ) {
 
-    this.Id     = Id;
-    this.Floor  = Floor;
-    this.posX   = X;
-    this.posY   = Y;
-    this.Room   = Room | 0;
+    this.Id         = Id;
+    this.Floor      = Floor;
+    this.Position   = null;
+    this.Room       = Room | 0;
 
     /**
      * Returns Floor of the Radar
@@ -18,7 +17,7 @@ function Radar( Id, Floor, X, Y, Room ) {
      */
     this.getFloor = function() {
         return this.Floor;
-    }
+    };
 
     /**
      * Returns the set room of the Radar
@@ -26,7 +25,7 @@ function Radar( Id, Floor, X, Y, Room ) {
      */
     this.getRoom  = function() {
         return this.Room;
-    }
+    };
 
     /**
      * Returns the Id
@@ -34,17 +33,14 @@ function Radar( Id, Floor, X, Y, Room ) {
      */
     this.getId = function() {
         return this.Id;
-    }
+    };
 
     /**
      * Returns position
      */
     this.getPosition = function() {
-        return {
-            'x': this.posX,
-            'y': this.posY
-        };
-    }
+        return this.Position;
+    };
 
     /**
      * Update position of the Radar
@@ -52,8 +48,9 @@ function Radar( Id, Floor, X, Y, Room ) {
      * @param Y
      */
     this.setPosition = function( X, Y ) {
-        this.posX = X;
-        this.posY = Y;
-    }
+        this.Position = new Point( X, Y );
+    };
 
+    // Initially set Position
+    this.setPosition( X, Y );
 }

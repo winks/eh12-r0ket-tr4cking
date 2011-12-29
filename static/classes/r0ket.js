@@ -7,11 +7,9 @@
 
 function r0ket( Id, X, Y ) {
 
-    this.Id = Id;
-    this.Radar = null;
-
-    this.posY = X | 0;
-    this.posX = Y | 0;
+    this.Id         = Id;
+    this.Radar      = null;
+    this.Positions  = new Queue( 30 );
 
     this.lastUpdate = null;
 
@@ -22,8 +20,7 @@ function r0ket( Id, X, Y ) {
      * @param UpdateTime int
      */
     this.updatePosition = function ( X, Y, UpdateTime ) {
-        this.posX = X;
-        this.posY = Y;
+        this.setPosition( X, Y );
         this.lastUpdate = UpdateTime || Math.floor(new Date().getTime() / 1000);
     }
 
@@ -39,11 +36,28 @@ function r0ket( Id, X, Y ) {
      * Returns position of r0ket
      */
     this.getPosition = function () {
-        return {
-            'x': this.posX,
-            'y': this.posY
-        };
+        return this.Positions.getTop();
     };
+
+    /**
+     * Sets Position
+     * @param X int
+     * @param Y int
+     */
+
+    this.setPosition = function( X, Y ) {
+        this.Positions.push( new Point( X, Y ) );
+    }
+
+
+    /**
+     * Returns the Position History
+     * @return Queue
+     */
+
+    this.getPositionHistory = function() {
+        return this.Positions;
+    }
 
     /**
      * @return Radar
@@ -64,4 +78,8 @@ function r0ket( Id, X, Y ) {
 
         return this.getRadar().getFloor();
     };
+
+    // Set position of constructed item
+    this.setPosition( X, Y );
+
 }
