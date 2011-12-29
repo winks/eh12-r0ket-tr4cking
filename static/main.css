@@ -153,6 +153,7 @@ body {
     -moz-border-radius: 10px;
     border: 1px solid lime;
     margin: 0 auto;
+    float: right;
 }
 
 h1 {
