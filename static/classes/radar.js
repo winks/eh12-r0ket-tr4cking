@@ -9,7 +9,7 @@ function Radar( Id, Floor, X, Y, Room ) {
     this.Id         = Id;
     this.Floor      = Floor;
     this.Position   = null;
-    this.Room       = Room | 0;
+    this.Room       = Room || 0;
 
     /**
      * Returns Floor of the Radar

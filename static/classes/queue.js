@@ -8,7 +8,7 @@
 function Queue( n ) {
 
     var queue  = [];
-    var length = n | 3;
+    var length = n || 3;
 
     /**
      * Adds an Item to the end of the queue,
