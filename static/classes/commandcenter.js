@@ -10,7 +10,7 @@ function CommandCenter() {
     this.r0kets = {};
     this.radars = {};
     this.floors = {};
-    this.floorcounts={};
+    this.floorcounts = {};
     var that   = this;
 
     /**
@@ -32,21 +32,21 @@ function CommandCenter() {
         
         //now update floor counter in guis
         //and add/delete floors
-        for(var index in this.floors)
+        for( var index in this.floors )
             this.floors[index].invalid=true;
         
         
-        for(var index in this.floorcounts){
-            if(!this.floors[index]){
-                this.floors[index]=new Floor(index);
+        for( var index in this.floorcounts ) {
+            if( !this.floors[index] ) {
+                this.floors[index]=new Floor( index );
             }else{
                 this.floors[index].invalid = false;
                 this.floors[index].count    = this.floorcounts[index];
             }
         };
         
-        for(var index in this.floors){
-            if(this.floors[index].invalid){
+        for( var index in this.floors ) {
+            if( this.floors[index].invalid ) {
                 this.floors[index].destruktor();
                 this.floors[index]=undefined;
                 continue;

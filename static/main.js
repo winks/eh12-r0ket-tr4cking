@@ -91,7 +91,7 @@ $(function() {
         for( var i in radars ) {
             
             var cfloor = radars[i].getFloor()
-            if(!objCmd.floors[cfloor].display) {
+            if( !objCmd.floors[cfloor].display ) {
                 continue;
             }
             var pos = radars[ i ].getPosition();
@@ -117,7 +117,7 @@ $(function() {
 
             var pos = r0kets[ i ].getPosition();
             var cfloor = r0kets[i].getFloor()
-            if(!objCmd.floors[cfloor].display) {
+            if( !objCmd.floors[cfloor].display ) {
                 continue;
             }
             ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 8, 0, Math.PI*2, true);
