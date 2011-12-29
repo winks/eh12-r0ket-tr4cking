@@ -87,7 +87,7 @@ $(function() {
     var ctx     = $paper[0].getContext('2d');
     // Render loop
 
-    var floorFiles = ['layer_1.png', 'layer_2.png', 'layer_3.png'];
+    var floorFiles = ['layer_1.png' , 'layer_2.png', 'layer_3.png' ];
     var floorDraw  = {};
 
     for( var i=0,l=floorFiles.length; i<l; i++ ) {
@@ -124,6 +124,11 @@ $(function() {
 
         var floor  = null, r0kets = [], radars = [], map = {};
         var floors = objCmd.getFloors();
+
+        console.log( floors );
+     //   floors[1].setDisplay( false );
+      //  floors[2].setDisplay( true );
+      //  floors[3].setDisplay( false );
 
         for( var f in floors) {
             floor = floors[ f ];
