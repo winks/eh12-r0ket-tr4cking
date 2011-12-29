@@ -9,6 +9,8 @@ function CommandCenter() {
 
     this.r0kets = {};
     this.radars = {};
+    this.floors = {};
+
     var that   = this;
 
     /**
@@ -36,7 +38,7 @@ function CommandCenter() {
      */
     function updateR0kets( r0ketData ) {
 
-        var tmpR0kets = {}, tmp = null;
+        var tmpR0kets = {}, tmp = null, tmpFloors = {};
 
         // Iterate over each tag
 
@@ -73,6 +75,10 @@ function CommandCenter() {
             tmpR0kets[ r0ketId ].updatePosition( Datapoint.px, Datapoint.py );
             tmpR0kets[ r0ketId ].setRadar( Radar );
 
+
+            var floor = tmpR0kets[ r0ketId ].getFloor();
+            tmpFloors[ floor ]++;
+
         }
 
         that.r0kets = tmpR0kets;
@@ -96,6 +102,7 @@ function CommandCenter() {
                 tmpRadars[ tmp.id ] = new Radar( tmp.id, tmp.floor, tmp.px, tmp.py, tmp.room );
             } else {
                 tmpRadars[ tmp.id ] = that.radars[ tmp.id ];
+                tmpRadars[ tmp.id ].setPosition( tmp.px, tmp.py );
             }
 
         }

@@ -13,22 +13,37 @@ function Radar( Id, Floor, X, Y, Room ) {
     this.Room   = Room | 0;
 
     /**
+     * Returns Floor of the Radar
      * @return int
      */
-    this.getFloor = function() { return this.Floor; }
+    this.getFloor = function() {
+        return this.Floor;
+    }
 
     /**
+     * Returns the set room of the Radar
      * @return int
      */
-    this.getRoom  = function() { return this.Room;  }
+    this.getRoom  = function() {
+        return this.Room;
+    }
 
     /**
+     * Returns the Id
      * @return int
      */
-    this.getId    = function() { return this.Id;    }
+    this.getId = function() {
+        return this.Id;
+    }
 
+    /**
+     * Returns position
+     */
     this.getPosition = function() {
-        return { 'x': this.posX, 'y': this.posY };
+        return {
+            'x': this.posX,
+            'y': this.posY
+        };
     }
 
 }

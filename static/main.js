@@ -59,6 +59,14 @@ $(function() {
     }, Config.updateInterval );
 
 
+    /**
+     * Render loop
+     */
+
+    var floors = {};
+    var r0kets = {};
+    var radars = {};
+
     setInterval( function() {
 
         console.log( objCmd.getR0kets() );

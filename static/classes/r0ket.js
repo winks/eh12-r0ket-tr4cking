@@ -15,14 +15,53 @@ function r0ket( Id, X, Y ) {
 
     this.lastUpdate = null;
 
+    /**
+     * Update position of r0ket
+     * @param X int
+     * @param Y int
+     * @param UpdateTime int
+     */
     this.updatePosition = function ( X, Y, UpdateTime ) {
         this.posX = X;
         this.posY = Y;
         this.lastUpdate = UpdateTime || Math.floor(new Date().getTime() / 1000);
     }
 
-    this.setRadar       = function ( Radar )    {   this.Radar = Radar;                         }
-    this.getPosition    = function ()           {   return { 'x': this.posX, 'y': this.posY };  }
-    this.getRadar       = function ()           {   return this.Radar;                          }
+    /**
+     * Set attached Radar
+     * @param Radar
+     */
+    this.setRadar = function ( Radar ) {
+        this.Radar = Radar;
+    };
 
+    /**
+     * Returns position of r0ket
+     */
+    this.getPosition = function () {
+        return {
+            'x': this.posX,
+            'y': this.posY
+        };
+    };
+
+    /**
+     * @return Radar
+     */
+    this.getRadar = function () {
+        return this.Radar;
+    };
+
+    /**
+     * Returns floor of Radar
+     * @return int|null
+     */
+    this.getFloor = function () {
+
+        if( this.Radar === null ) {
+            return null;
+        }
+
+        return this.getRadar().getFloor();
+    };
 }
