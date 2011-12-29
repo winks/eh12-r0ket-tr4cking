@@ -183,3 +183,6 @@ h2 {
 .floor-inactive {
     color: #f08080  !important;
 }
+
+.floor-inactive:before{content:"[";}
+.floor-inactive:after{content:"]";}
