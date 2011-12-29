@@ -12,6 +12,7 @@ function CommandCenter() {
     this.floors = {};
     this.floorcounts = {};
     var that   = this;
+    var floorcontroller=new FloorController();
 
     /**
      * Public update method, if new data is available
@@ -51,7 +52,7 @@ function CommandCenter() {
 
             // Skipping undefined radar (wtf...)
             if( !radarId ) {
-                console.error('Undefined radar!? Oo');
+                //console.error('Undefined radar!? Oo');
                 continue;
             }
 
@@ -121,6 +122,7 @@ function CommandCenter() {
         // in case that anything changes
         that.radars = tmpRadars;
         that.floors = tmpFloors;
+        floorcontroller.update(that.floors);
     };
 
     /**
