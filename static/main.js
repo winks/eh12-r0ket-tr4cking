@@ -58,11 +58,7 @@ $(function() {
 
     }, Config.updateInterval );
 
-
-    /**
-     * Render loop
-     */
-
+    // Retrieve canvas element, and set its size as attribute
     var $paper  = $('#paper');
 
     $paper.attr ( {
@@ -70,18 +66,21 @@ $(function() {
         'height':   Config.canvasMaxY
     } );
 
+    // Retrieve 2d render context
     var ctx     = $paper[0].getContext('2d');
 
+    // Render loop
 
     setInterval( function() {
 
+        // CLEAR ALL THE CANVAS
         ctx.clearRect( 0, 0, Config.canvasMaxX, Config.canvasMaxY );
 
-        console.log("Redrawing...", ctx );
-
+        // Retrieve r0kets and Radars
         var r0kets = objCmd.getR0kets();
         var radars = objCmd.getRadars();
 
+        // The radars goes greeeeen...
         ctx.fillStyle = "#00A308";
 
         ctx.beginPath();
@@ -94,6 +93,7 @@ $(function() {
         ctx.closePath();
         ctx.fill();
 
+        // The r0kets goes red
         ctx.fillStyle = "#FF0000";
         ctx.beginPath();
 
@@ -106,40 +106,6 @@ $(function() {
         ctx.fill();
 
     }, 1000 );
-/*
 
-    function drawItems() {
-
-        var r0ket = null;
-
-        for( var Id in r0ketSilo ) {
-
-            r0ket = r0ketSilo[ Id ];
-            var radar = r0ket.getRadar();
-
-            var pos = r0ket.getPosition();
-
-            var x   = map_range( pos.x, 0, Config.dataMaxX, 0, Config.canvasMaxX );
-            var y   = map_range( pos.y, 0, Config.dataMaxY, 0, Config.canvasMaxY );
-
-            var title = 'R0ket: '+Id+ ' - Floor: ' +radar.getFloor();
-
-            r0ket.getDOM()
-                    .animate({'left': Config.canvasMaxX-x, 'top': Config.canvasMaxY-y }, Config.updateInterval )
-                    .attr('title', title )
-
-
-        }
-
-        var dbg = '';
-        for( var f in Floors ) {
-            dbg += 'On Floor '+f+' are '+Floors[f]+' r0kets<br>';
-        }
-
-        $dbg.html(dbg);
-
-    }
-
-*/
 
 });
