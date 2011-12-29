@@ -55,6 +55,14 @@ $(function() {
 
     }, Config.updateInterval );
 
+    //    {"id":3905768340,"px":605,"py":452,"reader":1049},
+
+    var stalkId = 2334456648;
+    $('#r0ketid').change( function() {
+        stalkId = parseInt( $(this).val() , 16 );
+        console.log(stalkId);
+    });
+
     // Retrieve canvas element, and set its size as attribute
     var $paper  = $('#paper');
 
@@ -65,7 +73,7 @@ $(function() {
 
     // Retrieve 2d render context
     var ctx     = $paper[0].getContext('2d');
-
+    var floor = 2;
     // Render loop
 
     setInterval( function() {
@@ -83,24 +91,52 @@ $(function() {
         ctx.beginPath();
 
         for( var i in radars ) {
+            if( radars[i].getFloor() !== floor ) {
+                continue;
+            }
             var pos = radars[ i ].getPosition();
-            ctx.arc( pos.x, pos.y, 12, 0, Math.PI*2, true);
+            ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 12, 0, Math.PI*2, true);
         }
 
         ctx.closePath();
         ctx.fill();
+
+        var stalkR0ket = false;
 
         // The r0kets goes red
         ctx.fillStyle = "#FF0000";
         ctx.beginPath();
 
+
         for( var i in r0kets ) {
+
+            if( stalkId && stalkId == i ) {
+                stalkR0ket = r0kets[i];
+                continue;
+            }
+
             var pos = r0kets[ i ].getPosition();
-            ctx.arc( pos.x, pos.y, 8, 0, Math.PI*2, true);
+            if( r0kets[i].getFloor() !== floor ) {
+                continue;
+            }
+            ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 8, 0, Math.PI*2, true);
         }
 
         ctx.closePath();
         ctx.fill();
+
+        if( stalkR0ket ) {
+            ctx.fillStyle = "#0000FF";
+            ctx.beginPath();
+
+            var pos = stalkR0ket.getPosition();
+            ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 13, 0, Math.PI*2, true);
+
+            console.log("Drawing stalked r0ket at ", pos );
+
+            ctx.closePath();
+            ctx.fill();
+        }
 
     }, 1000 );
 
