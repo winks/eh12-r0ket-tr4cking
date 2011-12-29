@@ -196,3 +196,5 @@ h2 {
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
+.floor-inactive:before{content:"[";}
+.floor-inactive:after{content:"]";}
