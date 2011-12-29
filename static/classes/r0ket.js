@@ -5,7 +5,7 @@
  */
 
 
-function r0ket( Id, X, Y ) {
+function roket( Id, X, Y ) {
 
     this.Id         = Id;
     this.Radar      = null;
@@ -67,7 +67,7 @@ function r0ket( Id, X, Y ) {
     };
 
     /**
-     * Returns floor of Radar
+     * Returns floor of Radarr0ketId
      * @return int|null
      */
     this.getFloor = function () {
@@ -77,6 +77,10 @@ function r0ket( Id, X, Y ) {
         }
 
         return this.getRadar().getFloor();
+    };
+
+    this.getId = function() {
+        return this.Id;
     };
 
     // Set position of constructed item

@@ -78,6 +78,71 @@ $(function() {
         // CLEAR ALL THE CANVAS
         ctx.clearRect( 0, 0, Config.canvasMaxX, Config.canvasMaxY );
 
+        var floor  = null, r0kets = [], radars = [];
+        var floors = objCmd.getFloors();
+        for( var f in floors) {
+            floor = floors[ f ];
+
+            if( !floor.isDisplayed() ) {
+                continue;
+            }
+
+            r0kets = floor.getR0kets();
+            radars = floor.getRadars();
+
+            //////////////////////////////////////////////////////////////////////////////////
+            // Draw r0kets
+
+            ctx.fillStyle = "#FF0000";
+            ctx.beginPath();
+
+            for( var r in r0kets ) {
+                var pos = r0kets[ r ].getPosition();
+                ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 8, 0, Math.PI*2, true);
+            }
+
+            ctx.closePath();
+            ctx.fill();
+
+            //////////////////////////////////////////////////////////////////////////////////
+            // Draw radars
+
+            ctx.fillStyle = "#00A308";
+            ctx.beginPath();
+
+            for( var i in radars ) {
+                var pos = radars[ i ].getPosition();
+                ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 12, 0, Math.PI*2, true);
+            }
+
+            ctx.closePath();
+            ctx.fill();
+
+            //////////////////////////////////////////////////////////////////////////////////
+            // Draw movement path
+
+            ctx.strokeStyle = "#FF9900";
+            ctx.beginPath();
+
+            for( var i in r0kets ) {
+
+                var history = r0kets[ i ].getPositionHistory().getQueue();
+                var previous = false;
+                for( var x in history ) {
+
+                    if( previous ) {
+                        ctx.lineTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y );
+                    }
+
+                    ctx.moveTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y )
+                    previous = history[ x ];
+                }
+            }
+
+            ctx.closePath();
+            ctx.stroke();
+        }
+/*
         // Retrieve r0kets and Radars
         var r0kets = objCmd.getR0kets();
         var radars = objCmd.getRadars();
@@ -88,7 +153,8 @@ $(function() {
         ctx.beginPath();
 
         for( var i in radars ) {
-            var cfloor = radars[i].getFloor()
+            var cfloor = radars[i].getFloor();
+            console.log( cfloor, objCmd.floors );
             if( !objCmd.floors[cfloor].display ) {
 
                 continue;
@@ -116,6 +182,7 @@ $(function() {
 
             var pos = r0kets[ i ].getPosition();
             var cfloor = r0kets[i].getFloor()
+                console.log( cfloor );
             if( !objCmd.floors[cfloor].display ) {
                 continue;
             }
@@ -163,6 +230,7 @@ $(function() {
             ctx.closePath();
             ctx.fill();
         }
+        */
 
     }, 1000 );
 

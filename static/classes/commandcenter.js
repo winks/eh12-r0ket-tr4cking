@@ -29,30 +29,6 @@ function CommandCenter() {
         if( Data.tag ) {
             updateR0kets( Data.tag );
         }
-        
-        //now update floor counter in guis
-        //and add/delete floors
-        for( var index in this.floors )
-            this.floors[index].invalid=true;
-        
-        
-        for( var index in this.floorcounts ) {
-            if( !this.floors[index] ) {
-                this.floors[index]=new Floor( index );
-            }else{
-                this.floors[index].invalid = false;
-                this.floors[index].count    = this.floorcounts[index];
-            }
-        };
-        
-        for( var index in this.floors ) {
-            if( this.floors[index].invalid ) {
-                this.floors[index].destruktor();
-                this.floors[index]=undefined;
-                continue;
-            }
-            this.floors[index].updateText();
-        }
 
     };
 
@@ -62,7 +38,7 @@ function CommandCenter() {
      */
     function updateR0kets( r0ketData ) {
 
-        var tmpR0kets = {}, tmp = null, tmpFloors = {};
+        var tmpR0kets = {}, tmp = null;
 
         // Iterate over each tag
 
@@ -91,28 +67,23 @@ function CommandCenter() {
             if( that.r0ketExists( r0ketId ) ) {
                 tmpR0kets[ r0ketId ] = that.getR0ket( r0ketId );
             } else {
-                tmpR0kets[ r0ketId ] = new r0ket( r0ketId, Datapoint.px, Datapoint.py );
+                tmpR0kets[ r0ketId ] = new roket( r0ketId, Datapoint.px, Datapoint.py );
             }
 
             // Here i can rely that radarId exists due to previous checks
-            var Radar = that.getRadar( radarId );
+            var radar = that.getRadar( radarId );
+            var r0ket = tmpR0kets[ r0ketId ];
 
             // Update position of r0ket, set Radar
-            tmpR0kets[ r0ketId ].updatePosition( Datapoint.px, Datapoint.py );
-            tmpR0kets[ r0ketId ].setRadar( Radar );
+            r0ket.updatePosition( Datapoint.px, Datapoint.py );
+            r0ket.setRadar( radar );
 
-            // Count r0kets on each floor
-            var floor = tmpR0kets[ r0ketId ].getFloor();
-            if( !tmpFloors[ floor ] ) {
-                tmpFloors[ floor ] = 1;
-            } else {
-                tmpFloors[ floor ]++;
-            }
+            addR0ketToFloor( r0ket );
+            addRadarToFloor( radar );
 
         }
 
         that.r0kets = tmpR0kets;
-        that.floorcounts = tmpFloors;
 
     }
 
@@ -123,7 +94,7 @@ function CommandCenter() {
 
     function updateRadars( radarData ) {
 
-        var tmpRadars = {}, tmp = null;
+        var tmpRadars = {}, tmpFloors = {}, tmp = null;
 
         for( var Index in radarData ) {
 
@@ -136,12 +107,52 @@ function CommandCenter() {
                 tmpRadars[ tmp.id ] = new Radar( tmp.id, tmp.floor, tmp.px, tmp.py, tmp.room );
             }
 
+            var floor = tmpRadars[ tmp.id ].getFloor();
+
+            if( !that.floors[ floor ] ) {
+                tmpFloors[ floor ] = new Floor( floor );
+            } else {
+                tmpFloors[ floor ] = that.floors[ floor ];
+            }
+
         }
 
         // Using this method to delete old radar datas, but keep old one,
         // in case that anything changes
         that.radars = tmpRadars;
+        that.floors = tmpFloors;
+    };
 
+    /**
+     * Add a r0ket to a floor, and delete it from every other floor
+     * if a r0ket changes its floor
+     * @param r0ket
+     */
+
+    function addR0ketToFloor( r0ket ) {
+        for( var f in that.floors ) {
+            if( f = r0ket.getFloor() ) {
+                that.floors[ f ].addR0ket( r0ket );
+            } else {
+                that.floors[ f ].removeR0ket( r0ket );
+            }
+        }
+    }
+
+    /**
+     * Add a radar to a floor, and delete it from every other floor
+     * if a radar changes its floor ( should be a rare case, but you'll
+     * never know)
+     * @param radar radar
+     */
+    function addRadarToFloor( radar ) {
+        for( var f in that.floors ) {
+            if( f = radar.getFloor() ) {
+                that.floors[ f ].addRadar( radar );
+            } else {
+                that.floors[ f ].removeRadar( radar );
+            }
+        }
     }
 
     /**
@@ -151,7 +162,7 @@ function CommandCenter() {
      */
     this.radarExists = function( radarId ) {
         return ( this.radars[ radarId ] ) ? true : false;
-    }
+    };
 
     /**
      * Returns if an r0ket exists by id
@@ -160,7 +171,7 @@ function CommandCenter() {
      */
     this.r0ketExists = function( r0ketId ) {
         return ( this.r0kets[ r0ketId ] )? true : false;
-    }
+    };
 
 
     /**
@@ -169,7 +180,7 @@ function CommandCenter() {
      */
     this.getRadars  = function() {
         return this.radars;
-    }
+    };
 
     /**
      * Return radar given by radarId - if not exists, null
@@ -182,7 +193,7 @@ function CommandCenter() {
         }
 
         return this.radars[ radarId ];
-    }
+    };
 
     /**
      * RETURN ALL THE R0KETS
@@ -190,7 +201,7 @@ function CommandCenter() {
      */
     this.getR0kets = function() {
         return this.r0kets;
-    }
+    };
 
     /**
      * Returns r0ket by an given id
@@ -204,13 +215,14 @@ function CommandCenter() {
         }
 
         return this.r0kets[ r0ketId ];
-    }
+    };
 
     /**
-     * Returns key=>value pair of floor => number of r0kets
+     * Returns key=>value pair of floor => object of floor
+     * @return Floor[]
      */
     this.getFloors = function () {
         return this.floors;
-    }
+    };
 
 }

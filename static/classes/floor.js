@@ -1,38 +1,69 @@
 function Floor( name ){
 
     var that        =   this;
-    this.invalid    =   false;
-    this.display    =   true;
     this.name       =   name;
-    this.count      =   0;
 
-    var $div = $( '<div/>' );
+    var Display     = true;
+    var r0kets      = {};
+    var radars      = {};
 
-    $( "#floormenu" )
-            .append( $div )
-            .append( '<br/>' )
-            .addClass('floor-active');
-
-    $div.click(function(){
-        that.display = !that.display;
-
-        $div.removeClass('floor-active floor-inactive');
-        if( that.display ) {
-            $div.addClass('floor-active');
-        } else {
-            $div.addClass('floor-inactive');
-        }
-
-    });
-    
-    this.updateText = function() {
-        $div.html( "Floor " + this.name + " " + this.count + "r0kets" );
+    /**
+     * Add R0ket to Floor
+     * @param r0ket r0ket
+     */
+    this.addR0ket = function( roket ) {
+        var roketId = roket.getId();
+        r0kets[ roketId ] = roket;
     };
 
-    this.destructor = function() {
-        $div.remove();
+    /**
+     * Add radar to floor
+     * @param radar
+     */
+    this.addRadar = function( radar ) {
+        var radarId = radar.getId();
+        radars[ radarId ] = radar;
     };
-    
-    this.updateText();
+
+    this.removeR0ket = function( r0ket ) {
+        var r0ketId = r0ket.getId();
+        delete r0kets[ r0ketId ];
+    };
+
+    this.removeRadar = function( radar ) {
+        var radarId = radar.getId();
+        delete radars[ radarId ];
+    };
+
+    /**
+     * Return all the radars
+     * @return radar[]
+     */
+    this.getRadars = function() {
+        return radars;
+    };
+
+    /**
+     * Return all the rokets
+     * @return r0ket[]
+     */
+    this.getR0kets = function() {
+        return r0kets;
+    };
+
+    /**
+     * Set if floor is displayed
+     * @param state
+     */
+    this.setDisplay = function( state ) {
+        Display = state;
+    };
+
+    /**
+     * Check if floor is displayed
+     */
+    this.isDisplayed = function() {
+        return Display;
+    };
     
 };
