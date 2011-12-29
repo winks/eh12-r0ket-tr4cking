@@ -23,13 +23,13 @@ function FloorView() {
                 console.log("have");
                 continue;
             }
-            
+
             var floor = floors[i];
             var $div  = $( '<div/>' );
 
             $( "#floormenu" )
                     .append( $div )
-                    .addClass('floor-active');
+                    .addClass('floor-switch floor-active');
                     
             (function(floor) {
                 $div.click(function(){
