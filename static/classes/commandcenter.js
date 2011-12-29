@@ -63,10 +63,10 @@ function CommandCenter() {
             // in other case, use the reference of the current
 
             var r0ketId = Datapoint.id;
-            if( !that.r0ketExists( r0ketId ) ) {
-                tmpR0kets[ r0ketId ] = new r0ket( r0ketId, Datapoint.px, Datapoint.py );
-            } else {
+            if( that.r0ketExists( r0ketId ) ) {
                 tmpR0kets[ r0ketId ] = that.getR0ket( r0ketId );
+            } else {
+                tmpR0kets[ r0ketId ] = new r0ket( r0ketId, Datapoint.px, Datapoint.py );
             }
 
             var Radar = that.getRadar( radarId );
@@ -98,11 +98,11 @@ function CommandCenter() {
 
             tmp = radarData[ Index ];
 
-            if( !that.radarExists( tmp.id ) ) {
-                tmpRadars[ tmp.id ] = new Radar( tmp.id, tmp.floor, tmp.px, tmp.py, tmp.room );
-            } else {
+            if( that.radarExists( tmp.id ) ) {
                 tmpRadars[ tmp.id ] = that.radars[ tmp.id ];
                 tmpRadars[ tmp.id ].setPosition( tmp.px, tmp.py );
+            } else {
+                tmpRadars[ tmp.id ] = new Radar( tmp.id, tmp.floor, tmp.px, tmp.py, tmp.room );
             }
 
         }
