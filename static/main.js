@@ -156,6 +156,9 @@ $(function() {
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 ctx.arc( map.x, map.y, 8, 0, Math.PI*2, true);
+                if( r0kets[ r ].getNick() ) {
+                    ctx.fillText( r0kets[ r ].getNick() , map.x+20, map.y+5);
+                }
             }
 
             ctx.closePath();
@@ -172,9 +175,6 @@ $(function() {
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 ctx.arc( map.x, map.y, 12, 0, Math.PI*2, true);
-                if( radars[ i ].getNick() ) {
-                    ctx.fillText( radars[ i ].getNick() , map.x+20, map.y+5);
-                }
             }
 
             ctx.closePath();

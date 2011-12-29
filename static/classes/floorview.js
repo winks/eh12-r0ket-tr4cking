@@ -29,7 +29,7 @@ function FloorView() {
             }
 
             var floor = floors[i];
-            var $div  = $( '<div/>' {
+            var $div  = $( '<div/>', {
                 'class': 'floor-switch'
             });
 
