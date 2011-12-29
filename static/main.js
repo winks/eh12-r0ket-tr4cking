@@ -26,8 +26,8 @@ function map_canvas( val1, val2 ) {
     };
 }
 
-var offsetX = 20;
-var offsetY = 20;
+var offsetX = 60;
+var offsetY = -30;
 
 $(function() {
     var objCmd = new CommandCenter;
@@ -124,6 +124,7 @@ $(function() {
         for( var i in floorDraw ) {
             var floorImage = floorDraw[ i ];
             if( floorImage.loaded ) {
+                ctx.moveTo(0,0);
                 ctx.drawImage( floorImage.image, 0, 0 );
             }
         }
@@ -156,9 +157,9 @@ $(function() {
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 ctx.moveTo( map.x, map.y );
-                ctx.arc( map.x, map.y, 8, 0, Math.PI*2, true);
+                ctx.arc( map.x, map.y, 3, 0, Math.PI*2, true);
                 if( r0kets[ r ].getNick() ) {
-                    ctx.fillText( r0kets[ r ].getNick() , map.x+20, map.y+5);
+                    ctx.fillText( r0kets[ r ].getNick() , map.x+7, map.y+3);
                 }
             }
 
@@ -186,7 +187,7 @@ $(function() {
             // Draw movement path
 
             ctx.strokeStyle = "#FF9900";
-            ctx.lineWidth   = 3;
+            ctx.lineWidth   = 2;
             ctx.beginPath();
 
             for( var i in r0kets ) {
