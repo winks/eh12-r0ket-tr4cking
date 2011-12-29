@@ -173,13 +173,13 @@ h1 {
 }
 
 h2 {
-    color: #fff;
+    /*color: #fff;*/
 }
 
 .floor-active {
-    color: lime;
+    color: lime !important;
 }
 
 .floor-inactive {
-    color: #f08080;
+    color: #f08080  !important;
 }
