@@ -175,3 +175,11 @@ h1 {
 h2 {
     color: #fff;
 }
+
+.floor-active {
+    color: lime;
+}
+
+.floor-inactive {
+    color: #f08080;
+}

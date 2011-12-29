@@ -55,7 +55,7 @@ $(function() {
 
     //    {"id":3905768340,"px":605,"py":452,"reader":1049},
 
-    var stalkId = 2334456648;
+    var stalkId = 89203649;
     $('#r0ketid').change( function() {
         stalkId = parseInt( $(this).val() , 16 );
         console.log(stalkId);
