@@ -6,9 +6,6 @@ author: schinken
 
  */
 
-var r0ketSilo = {};
-var Radars = {};
-var Floors = {};
 
 var Config = {
     'dataMaxX':         1000,
