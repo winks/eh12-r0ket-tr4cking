@@ -10,7 +10,7 @@ function roket( Id, X, Y ) {
     this.Id         = Id;
     this.Radar      = null;
     this.Positions  = new Queue( 30 );
-
+    this.nick       = false;
     this.lastUpdate = null;
 
     /**
@@ -85,5 +85,12 @@ function roket( Id, X, Y ) {
 
     // Set position of constructed item
     this.setPosition( X, Y );
-
+    
+    this.setNick = function( nick ) {
+        this.nick=nick ? nick : false;
+    };
+    
+    this.getNick = function () {
+        return this.nick;
+    };
 }

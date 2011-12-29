@@ -77,6 +77,10 @@ function CommandCenter() {
             // Update position of r0ket, set Radar
             r0ket.updatePosition( Datapoint.px, Datapoint.py );
             r0ket.setRadar( radar );
+            if( Datapoint.nick ) {
+                var farr = Datapoint.nick;
+                r0ket.setNick( farr )
+            }
 
             addR0ketToFloor( r0ket );
             addRadarToFloor( radar );
