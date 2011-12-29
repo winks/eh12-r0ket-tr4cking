@@ -83,6 +83,7 @@ function CommandCenter() {
         }
 
         that.r0kets = tmpR0kets;
+        that.floors = tmpFloors;
 
     }
 
@@ -158,7 +159,7 @@ function CommandCenter() {
      * RETURN ALL THE R0KETS
      * @return r0ket[]
      */
-    this.getR0kets  = function() {
+    this.getR0kets = function() {
         return this.r0kets;
     }
 
@@ -167,13 +168,20 @@ function CommandCenter() {
      * @return r0ket
      * @param r0ketId int
      */
-    this.getR0ket   = function( r0ketId ) {
+    this.getR0ket = function( r0ketId ) {
 
         if( !this.r0ketExists( r0ketId ) ) {
             return null;
         }
 
         return this.r0kets[ r0ketId ];
+    }
+
+    /**
+     * Returns key=>value pair of floor => number of r0kets
+     */
+    this.getFloors = function () {
+        return this.floors;
     }
 
 }
