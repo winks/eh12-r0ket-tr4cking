@@ -183,3 +183,16 @@ h2 {
 .floor-inactive {
     color: #f08080  !important;
 }
+
+#controls {
+    float: left;
+    color: #fff;
+}
+.floor-switch {
+    margin: 4px;
+    padding: 3px;
+    background-color: rgba(0,0,0,0.6);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}

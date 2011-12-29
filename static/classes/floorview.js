@@ -26,10 +26,11 @@ function FloorView() {
 
             var floor = floors[i];
             var $div  = $( '<div/>' );
+            $div.addClass('floor-switch');
 
             $( "#floormenu" )
                     .append( $div )
-                    .addClass('floor-switch floor-active');
+                    .addClass('floor-active');
                     
             (function(floor) {
                 $div.click(function(){
