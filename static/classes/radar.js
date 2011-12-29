@@ -46,4 +46,14 @@ function Radar( Id, Floor, X, Y, Room ) {
         };
     }
 
+    /**
+     * Update position of the Radar
+     * @param X
+     * @param Y
+     */
+    this.setPosition = function( X, Y ) {
+        this.posX = X;
+        this.posY = Y;
+    }
+
 }

@@ -150,7 +150,7 @@ function CommandCenter() {
             return null;
         }
 
-        return this.radarExists( radarId );
+        return this.radars[ radarId ];
     }
 
     /**
