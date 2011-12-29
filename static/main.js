@@ -10,8 +10,8 @@ author: schinken
 var Config = {
     'dataMaxX':         1000,
     'dataMaxY':         1000,
-    'canvasMaxX':       863,
-    'canvasMaxY':       1000,
+    'canvasMaxY':       863,
+    'canvasMaxX':       1000,
     'updateInterval':   500
 }
 
@@ -26,8 +26,8 @@ function map_canvas( val1, val2 ) {
     };
 }
 
-var offsetX = 0;
-var offsetY = 0;
+var offsetX = 20;
+var offsetY = 20;
 
 $(function() {
     var objCmd = new CommandCenter;
