@@ -10,10 +10,24 @@ author: schinken
 var Config = {
     'dataMaxX':         1000,
     'dataMaxY':         1000,
-    'canvasMaxX':       1000,
+    'canvasMaxX':       863,
     'canvasMaxY':       1000,
     'updateInterval':   500
 }
+
+function map_range( val, min1, max1, min2, max2 ) {
+    return (val-min1)/(max1-min1) * (max2-min2) + min2;
+}
+
+function map_canvas( val1, val2 ) {
+    return {
+        'x': map_range( val1, 0, Config.dataMaxX, 0, Config.canvasMaxX ),
+        'y': map_range( val2, 0, Config.dataMaxY, 0, Config.canvasMaxX )
+    };
+}
+
+var offsetX = 0;
+var offsetY = 0;
 
 $(function() {
     var objCmd = new CommandCenter;
@@ -73,13 +87,44 @@ $(function() {
     var ctx     = $paper[0].getContext('2d');
     // Render loop
 
+    var floorFiles = ['layer_1.png', 'layer_2.png', 'layer_3.png'];
+    var floorDraw  = {};
+
+    for( var i=0,l=floorFiles.length; i<l; i++ ) {
+
+        var file = 'static/floorplans/'+floorFiles[i];
+        var img  = new Image();
+
+        floorDraw[i] = {
+            'file':     file,
+            'image':    img,
+            'loaded': false
+        };
+
+        (function (i) {
+            img.onload = function( ) {
+                floorDraw[i].loaded = true;
+            };
+        })( i );
+
+        img.src = file;
+    }
+
     setInterval( function() {
 
         // CLEAR ALL THE CANVAS
         ctx.clearRect( 0, 0, Config.canvasMaxX, Config.canvasMaxY );
 
-        var floor  = null, r0kets = [], radars = [];
+        for( var i in floorDraw ) {
+            var floorImage = floorDraw[ i ];
+            if( floorImage.loaded ) {
+                ctx.drawImage( floorImage.image, 0, 0 );
+            }
+        }
+
+        var floor  = null, r0kets = [], radars = [], map = {};
         var floors = objCmd.getFloors();
+
         for( var f in floors) {
             floor = floors[ f ];
 
@@ -98,7 +143,9 @@ $(function() {
 
             for( var r in r0kets ) {
                 var pos = r0kets[ r ].getPosition();
-                ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 8, 0, Math.PI*2, true);
+                    map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
+
+                ctx.arc( map.x, map.y, 8, 0, Math.PI*2, true);
             }
 
             ctx.closePath();
@@ -112,7 +159,8 @@ $(function() {
 
             for( var i in radars ) {
                 var pos = radars[ i ].getPosition();
-                ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 12, 0, Math.PI*2, true);
+                    map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
+                ctx.arc( map.x, map.y, 12, 0, Math.PI*2, true);
             }
 
             ctx.closePath();
@@ -122,6 +170,7 @@ $(function() {
             // Draw movement path
 
             ctx.strokeStyle = "#FF9900";
+            ctx.lineWidth   = 3;
             ctx.beginPath();
 
             for( var i in r0kets ) {
@@ -130,11 +179,13 @@ $(function() {
                 var previous = false;
                 for( var x in history ) {
 
+                    map = map_canvas( offsetX+history[ x ].X, offsetY+history[ x ].Y );
+
                     if( previous ) {
-                        ctx.lineTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y );
+                        ctx.lineTo( map.x, map.y );
                     }
 
-                    ctx.moveTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y )
+                    ctx.moveTo( map.x, map.y )
                     previous = history[ x ];
                 }
             }
@@ -142,95 +193,7 @@ $(function() {
             ctx.closePath();
             ctx.stroke();
         }
-/*
-        // Retrieve r0kets and Radars
-        var r0kets = objCmd.getR0kets();
-        var radars = objCmd.getRadars();
 
-        // The radars goes greeeeen...
-        ctx.fillStyle = "#00A308";
-
-        ctx.beginPath();
-
-        for( var i in radars ) {
-            var cfloor = radars[i].getFloor();
-            console.log( cfloor, objCmd.floors );
-            if( !objCmd.floors[cfloor].display ) {
-
-                continue;
-            }
-            var pos = radars[ i ].getPosition();
-            ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 12, 0, Math.PI*2, true);
-        }
-
-        ctx.closePath();
-        ctx.fill();
-
-        var stalkR0ket = false;
-
-        // The r0kets goes red
-        ctx.fillStyle = "#FF0000";
-        ctx.beginPath();
-
-
-        for( var i in r0kets ) {
-
-            if( stalkId && stalkId == i ) {
-                stalkR0ket = r0kets[i];
-                continue;
-            }
-
-            var pos = r0kets[ i ].getPosition();
-            var cfloor = r0kets[i].getFloor()
-                console.log( cfloor );
-            if( !objCmd.floors[cfloor].display ) {
-                continue;
-            }
-
-            ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 8, 0, Math.PI*2, true);
-
-        }
-
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.strokeStyle = "#FF9900";
-        ctx.beginPath();
-
-        for( var i in r0kets ) {
-
-            var history = r0kets[ i ].getPositionHistory().getQueue();
-            var previous = false;
-            for( var x in history ) {
-
-                if( previous ) {
-                    ctx.lineTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y );
-                }
-
-                ctx.moveTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y )
-                previous = history[ x ];
-
-
-
-            }
-        }
-
-        ctx.closePath();
-        ctx.stroke();
-
-        if( stalkR0ket ) {
-            ctx.fillStyle = "#0000FF";
-            ctx.beginPath();
-
-            var pos = stalkR0ket.getPosition();
-            ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 13, 0, Math.PI*2, true);
-
-            console.log("Drawing stalked r0ket at ", pos );
-
-            ctx.closePath();
-            ctx.fill();
-        }
-        */
 
     }, 1000 );
 

@@ -41,7 +41,6 @@ function CommandCenter() {
         var tmpR0kets = {}, tmp = null;
 
         // Iterate over each tag
-
         for( var Key in r0ketData ) {
 
             var Datapoint = r0ketData[ Key ];
@@ -108,7 +107,6 @@ function CommandCenter() {
             }
 
             var floor = tmpRadars[ tmp.id ].getFloor();
-
             if( !that.floors[ floor ] ) {
                 tmpFloors[ floor ] = new Floor( floor );
             } else {
