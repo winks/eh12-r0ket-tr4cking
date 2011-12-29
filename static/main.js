@@ -71,7 +71,6 @@ $(function() {
 
     // Retrieve 2d render context
     var ctx     = $paper[0].getContext('2d');
-    //var floor = 2;
     // Render loop
 
     setInterval( function() {
@@ -89,13 +88,13 @@ $(function() {
         ctx.beginPath();
 
         for( var i in radars ) {
-            
             var cfloor = radars[i].getFloor()
             if( !objCmd.floors[cfloor].display ) {
+
                 continue;
             }
             var pos = radars[ i ].getPosition();
-            ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 12, 0, Math.PI*2, true);
+            ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 12, 0, Math.PI*2, true);
         }
 
         ctx.closePath();
@@ -120,18 +119,44 @@ $(function() {
             if( !objCmd.floors[cfloor].display ) {
                 continue;
             }
-            ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 8, 0, Math.PI*2, true);
+
+            ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 8, 0, Math.PI*2, true);
+
         }
 
         ctx.closePath();
         ctx.fill();
+
+        ctx.strokeStyle = "#FF9900";
+        ctx.beginPath();
+
+        for( var i in r0kets ) {
+
+            var history = r0kets[ i ].getPositionHistory().getQueue();
+            var previous = false;
+            for( var x in history ) {
+
+                if( previous ) {
+                    ctx.lineTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y );
+                }
+
+                ctx.moveTo( Config.canvasMaxX-history[x].X, Config.canvasMaxY-history[x].Y )
+                previous = history[ x ];
+
+
+
+            }
+        }
+
+        ctx.closePath();
+        ctx.stroke();
 
         if( stalkR0ket ) {
             ctx.fillStyle = "#0000FF";
             ctx.beginPath();
 
             var pos = stalkR0ket.getPosition();
-            ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 13, 0, Math.PI*2, true);
+            ctx.arc( Config.canvasMaxX-pos.X, Config.canvasMaxY-pos.Y, 13, 0, Math.PI*2, true);
 
             console.log("Drawing stalked r0ket at ", pos );
 
