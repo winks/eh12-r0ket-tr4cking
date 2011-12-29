@@ -10,7 +10,7 @@ function CommandCenter() {
     this.r0kets = {};
     this.radars = {};
     this.floors = {};
-
+    this.floorcounts={};
     var that   = this;
 
     /**
@@ -28,6 +28,30 @@ function CommandCenter() {
         // If tag datapoint exists, UPDATE ALL THE R0KETS!
         if( Data.tag ) {
             updateR0kets( Data.tag );
+        }
+        
+        //now update floor counter in guis
+        //and add/delete floors
+        for(var index in this.floors)
+            this.floors[index].invalid=true;
+        
+        
+        for(var index in this.floorcounts){
+            if(!this.floors[index]){
+                this.floors[index]=new Floor(index);
+            }else{
+                this.floors[index].invalid = false;
+                this.floors[index].count    = this.floorcounts[index];
+            }
+        };
+        
+        for(var index in this.floors){
+            if(this.floors[index].invalid){
+                this.floors[index].destruktor();
+                this.floors[index]=undefined;
+                continue;
+            }
+            this.floors[index].updateText();
         }
 
     };
@@ -88,7 +112,7 @@ function CommandCenter() {
         }
 
         that.r0kets = tmpR0kets;
-        that.floors = tmpFloors;
+        that.floorcounts = tmpFloors;
 
     }
 

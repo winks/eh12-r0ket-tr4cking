@@ -16,9 +16,7 @@ var Config = {
 }
 
 $(function() {
-
     var objCmd = new CommandCenter;
-
     var $visual = $('#visual');
     $visual.width   ( Config.canvasMaxX );
     $visual.height  ( Config.canvasMaxY );
@@ -73,7 +71,7 @@ $(function() {
 
     // Retrieve 2d render context
     var ctx     = $paper[0].getContext('2d');
-    var floor = 2;
+    //var floor = 2;
     // Render loop
 
     setInterval( function() {
@@ -91,7 +89,9 @@ $(function() {
         ctx.beginPath();
 
         for( var i in radars ) {
-            if( radars[i].getFloor() !== floor ) {
+            
+            var cfloor = radars[i].getFloor()
+            if(!objCmd.floors[cfloor].display) {
                 continue;
             }
             var pos = radars[ i ].getPosition();
@@ -116,7 +116,8 @@ $(function() {
             }
 
             var pos = r0kets[ i ].getPosition();
-            if( r0kets[i].getFloor() !== floor ) {
+            var cfloor = r0kets[i].getFloor()
+            if(!objCmd.floors[cfloor].display) {
                 continue;
             }
             ctx.arc( Config.canvasMaxX-pos.x, Config.canvasMaxY-pos.y, 8, 0, Math.PI*2, true);
