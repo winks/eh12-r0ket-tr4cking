@@ -51,12 +51,13 @@ function CommandCenter() {
 
             // Skipping undefined radar (wtf...)
             if( !radarId ) {
-                return;
+                console.error('Undefined radar!? Oo');
+                continue;
             }
 
             if( !that.radarExists( radarId ) ) {
                 console.error('WTF? R0ket is attached to an reader that doesnt exist.');
-                return;
+                continue;
             }
 
             // Create instance of r0ket if it doesnt exist,
