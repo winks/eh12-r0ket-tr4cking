@@ -196,7 +196,7 @@ h2 {
     float: left;
     color: #fff;
 }
-.floor-switch,#flattr {
+.floor-switch, .navlink {
     margin: 4px;
     padding: 3px;
     background-color: rgba(0,0,0,0.6);
@@ -206,3 +206,7 @@ h2 {
 }
 .floor-inactive:before{content:"[";}
 .floor-inactive:after{content:"]";}
+
+.navlink{
+    color: lime !important;
+};
