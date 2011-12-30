@@ -32,6 +32,7 @@ var offsetY = -30;
 $(function() {
     var objCmd = new CommandCenter;
     var $visual = $('#visual');
+    var radarancle=0;
     $visual.width   ( Config.canvasMaxX );
     $visual.height  ( Config.canvasMaxY );
 
@@ -71,10 +72,7 @@ $(function() {
 
     //    {"id":3905768340,"px":605,"py":452,"reader":1049},
 
-    var stalkId = 89203649;
-    $('#r0ketid').change( function() {
-        stalkId = parseInt( $(this).val() , 16 );
-    });
+
 
     // Retrieve canvas element, and set its size as attribute
     var $paper  = $('#paper');
@@ -115,7 +113,7 @@ $(function() {
     $('.floor-switch').live('click', function() {
         drawCanvas();
     });
-
+	
     function drawCanvas () {
 
         // CLEAR ALL THE CANVAS
@@ -182,19 +180,23 @@ $(function() {
             // Draw radars
 
             ctx.fillStyle = "#00A308";
+            ctx.lineWidth = 1 ;
             ctx.beginPath();
-
+			
+			radarancle+=0.2;
+			radarancle=radarancle%(Math.PI*2);
             for( var i in radars ) {
+				var tancle = ( radarancle + ( i * 0.1 ) ) % ( Math.PI * 2 );
                 var pos = radars[ i ].getPosition();
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 ctx.moveTo( map.x, map.y );
-                ctx.arc( map.x, map.y, 12, 0, Math.PI*2, true);
+                ctx.arc( map.x, map.y, 20, radarancle, -Math.PI*2, true);
             }
 
             ctx.closePath();
-            ctx.fill();
-
+            //ctx.fill();
+            ctx.stroke();
             //////////////////////////////////////////////////////////////////////////////////
             // Draw movement path
 
