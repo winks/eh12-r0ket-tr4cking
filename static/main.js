@@ -158,13 +158,25 @@ $(function() {
 
                 ctx.moveTo( map.x, map.y );
                 ctx.arc( map.x, map.y, 3, 0, Math.PI*2, true);
-                if( r0kets[ r ].getNick() ) {
-                    ctx.fillText( r0kets[ r ].getNick() , map.x+7, map.y+3);
-                }
             }
 
             ctx.closePath();
             ctx.fill();
+
+            //////////////////////////////////////////////////////////////////////////////////
+            // Draw nicknames to r0kets
+
+            ctx.fillStyle = "#FFFFFF";
+            for( var r in r0kets ) {
+                
+                var pos = r0kets[ r ].getPosition();
+                                    map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
+
+                if( r0kets[ r ].getNick() ) {
+                    ctx.moveTo( map.x+7, map.y+3 );
+                    ctx.fillText( r0kets[ r ].getNick() , map.x+7, map.y+3);
+                }
+            }
 
             //////////////////////////////////////////////////////////////////////////////////
             // Draw radars
