@@ -8,13 +8,18 @@ function FloorView() {
 
     var floorHtmls={};
 
+
+    var getFloorInfo = function(name) {
+        return FloorCfg[name] ? FloorCfg[name] : {name:"Floor "+name , path:""}
+    };
+
     var updateTexts = function() {
         for( var i in floorHtmls ) {
             var floor=floorHtmls[i].obj;
-            floorHtmls[i].html.html( "Floor " + floor.getName() + " " + Object.keys(floor.getR0kets()).length + " r0ckets");
+            floorHtmls[i].html.html( getFloorInfo(floor.getName()).name + ": " + Object.keys(floor.getR0kets()).length + " r0ckets");
         }
     };
-    
+
     this.update = function( floors ){
 
         //check for new ones, delete old
@@ -64,4 +69,14 @@ function FloorView() {
         }
         updateTexts();
     };
+};
+
+var FloorCfg = {
+    1 : { name: "Floor 1",
+          path: "foobar" } ,
+
+    2 : { name: "hackcenter",
+          path: "path_to_room" },
+
+
 };
