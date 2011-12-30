@@ -196,7 +196,7 @@ h2 {
     float: left;
     color: #fff;
 }
-.floor-switch {
+.floor-switch,#flattr {
     margin: 4px;
     padding: 3px;
     background-color: rgba(0,0,0,0.6);
