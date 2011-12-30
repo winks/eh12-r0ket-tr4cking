@@ -156,7 +156,7 @@ body {
     float: right;
 }
 
-h1 {
+h1,h3 {
     font-family: Verdana;
     text-shadow: 0px 0px 12px #10b307;
 
@@ -172,6 +172,13 @@ h1 {
     z-index: 10;
 
 }
+h3{
+    position: fixed;
+    left: 34%;
+    top: 44px;
+    font-size: 12px;
+}
+
 
 h2 {
     /*color: #fff;*/
