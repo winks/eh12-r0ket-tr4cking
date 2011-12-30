@@ -135,10 +135,9 @@ function CommandCenter() {
 
     function addR0ketToFloor( r0ket ) {
         for( var f in that.floors ) {
+            that.floors[ f ].removeR0ket( r0ket );
             if( f = r0ket.getFloor() ) {
                 that.floors[ f ].addR0ket( r0ket );
-            } else {
-                that.floors[ f ].removeR0ket( r0ket );
             }
         }
     }
@@ -151,10 +150,9 @@ function CommandCenter() {
      */
     function addRadarToFloor( radar ) {
         for( var f in that.floors ) {
+            that.floors[ f ].removeRadar( radar );
             if( f = radar.getFloor() ) {
                 that.floors[ f ].addRadar( radar );
-            } else {
-                that.floors[ f ].removeRadar( radar );
             }
         }
     }
