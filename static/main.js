@@ -12,7 +12,7 @@ var Config = {
     'dataMaxY':         1000,
     'canvasMaxY':       863,
     'canvasMaxX':       1000,
-    'updateInterval':   500
+    'updateInterval':   900
 }
 
 function map_range( val, min1, max1, min2, max2 ) {
