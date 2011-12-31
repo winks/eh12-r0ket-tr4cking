@@ -53,7 +53,7 @@ $(function() {
         }, 3000 );
 
         // Run ajax with random get parameter to prevent caching from browser
-        $.get('http://longcat.de/ccc/r0ketreplay/replay.php', {'rnd': Math.random() }, function( Data ) {
+        $.get('debug/proxy.php', {'rnd': Math.random() }, function( Data ) {
 
             // Remove lock if data is received
             lock = false;
