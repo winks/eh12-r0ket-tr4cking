@@ -21,15 +21,14 @@ if( $apcExists ) {
     $cache = sprintf("%.1f", round($cache/100*2)/2 );
 
     if(  ( $result = apc_fetch( $cache ) ) !== false ) {
-        trigger_error ( '28c3 cache hit' );
         echo $result;
         exit;
     }
 }
 
-$ch = curl_init( 'http://176.99.39.100/tracking.json' );
+$ch = curl_init( 'http://r0ket.dyndns.org/output.json' );
 
-curl_setopt( $ch, CURLOPT_USERAGENT, "28c3 r0ketr5ck debug proxy" );
+curl_setopt( $ch, CURLOPT_USERAGENT, "eh12 r0ketr4ck debug proxy" );
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, true);
 curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 5);
