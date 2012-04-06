@@ -26,7 +26,7 @@ if( $apcExists ) {
     }
 }
 
-$ch = curl_init( 'http://r0ket.dyndns.org/output.json' );
+$ch = curl_init( 'http://r0ket.dyndns.org:8888/output.json' );
 
 curl_setopt( $ch, CURLOPT_USERAGENT, "eh12 r0ketr4ck debug proxy" );
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
