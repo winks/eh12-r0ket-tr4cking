@@ -8,12 +8,12 @@ author: schinken
 
 
 var Config = {
-    'dataMaxX':         1000,
-    'dataMaxY':         1000,
-    'canvasMaxY':       863,
-    'canvasMaxX':       1000,
+    'dataMaxX':         1108,
+    'dataMaxY':         772,
+    'canvasMaxX':       1108,
+    'canvasMaxY':       772,
     'updateInterval':   900
-}
+};
 
 function map_range( val, min1, max1, min2, max2 ) {
     return (val-min1)/(max1-min1) * (max2-min2) + min2;
@@ -22,17 +22,18 @@ function map_range( val, min1, max1, min2, max2 ) {
 function map_canvas( val1, val2 ) {
     return {
         'x': map_range( val1, 0, Config.dataMaxX, 0, Config.canvasMaxX ),
-        'y': map_range( val2, 0, Config.dataMaxY, 0, Config.canvasMaxX )
+        'y': map_range( val2, 0, Config.dataMaxY, 0, Config.canvasMaxY )
     };
 }
 
-var offsetX = 60;
-var offsetY = -30;
+var offsetX = -5;
+var offsetY = 0;
 
 $(function() {
     var objCmd = new CommandCenter;
     var $visual = $('#visual');
     var radarancle=0;
+
     $visual.width   ( Config.canvasMaxX );
     $visual.height  ( Config.canvasMaxY );
 
@@ -53,7 +54,7 @@ $(function() {
         }, 3000 );
 
         // Run ajax with random get parameter to prevent caching from browser
-        $.get('http://longcat.de/ccc/r0ketreplay/replay.php', {'rnd': Math.random() }, function( Data ) {
+        $.get('http://longcat.de/eh12/debug/proxy.php', {'rnd': Math.random() }, function( Data ) {
 
             // Remove lock if data is received
             lock = false;
@@ -86,7 +87,7 @@ $(function() {
     var ctx     = $paper[0].getContext('2d');
     // Render loop
 
-    var floorFiles = ['layer_1.png' , 'layer_2.png', 'layer_3.png' ];
+    var floorFiles = ['floorplan.png'];
     var floorDraw  = {};
 
     for( var i=0,l=floorFiles.length; i<l; i++ ) {
@@ -108,11 +109,6 @@ $(function() {
 
         img.src = file;
     }
-
-    // add a clickelement to all coming
-    $('.floor-switch').live('click', function() {
-        drawCanvas();
-    });
 	
     function drawCanvas () {
 
@@ -164,11 +160,11 @@ $(function() {
             //////////////////////////////////////////////////////////////////////////////////
             // Draw nicknames to r0kets
 
-            ctx.fillStyle = "#FFFFFF";
+            ctx.fillStyle = "#000000";
             for( var r in r0kets ) {
                 
                 var pos = r0kets[ r ].getPosition();
-                                    map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
+                    map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 if( r0kets[ r ].getNick() ) {
                     ctx.moveTo( map.x+7, map.y+3 );
@@ -179,7 +175,7 @@ $(function() {
             //////////////////////////////////////////////////////////////////////////////////
             // Draw radars
 
-            ctx.fillStyle = "#00A308";
+            ctx.fillStyle = "#000000";
             ctx.lineWidth = 1 ;
             ctx.beginPath();
 			
@@ -191,7 +187,7 @@ $(function() {
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 ctx.moveTo( map.x, map.y );
-                ctx.arc( map.x, map.y, 20, radarancle, -Math.PI*2, true);
+                ctx.arc( map.x, map.y, 10, radarancle, -Math.PI*2, true);
             }
 
             ctx.closePath();
