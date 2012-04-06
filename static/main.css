@@ -50,8 +50,7 @@ table {
 body {
     padding: 10px;
 
-    background-color: #000;
-    background-image: url( background.jpg );
+    background-color: #fff;
 }
 
 .button {
@@ -65,117 +64,28 @@ body {
     margin: 5px;
 }
 
-@-webkit-keyframes 'glow' {
-    0% {
-      border-color: rgba(255, 0, 0, .5);
-      background-color: rgba(255,40,40,0.2);
-      -webkit-box-shadow: 0 0 1px rgba(255, 0, 0, .3);
-    }
-    100% {
-      border-color: rgba(255, 0, 0, 1);
-      background-color: rgba(255,40,40,0.6);
-      -webkit-box-shadow: 0 0 10px rgba(255, 0, 0, 1);
-    }
-  }
-
-.lifeform {
-    position: absolute;
-    border: 1px solid rgba(255,0,0,0.8);
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    top: 0;
-    left: 0;
-    
-    background-color: rgba(255,40,40,0.4);
-    width: 10px;
-    height: 10px;
-
-    box-shadow: 0px 0px 12px red;
-
-    -webkit-animation-name: 'glow';
-    -webkit-animation-duration: .7s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-direction: alternate;
-    -webkit-animation-timing-function: ease-in-out;
-}
-
-@-webkit-keyframes rotate {
- from {
-   -webkit-transform: rotate(0deg);
- }
- to {
-   -webkit-transform: rotate(360deg);
- }
-}
-@-moz-keyframes rotate {
- from {
-   -moz-transform: rotate(0deg);
- }
- to {
-   -moz-transform: rotate(360deg);
- }
-}
-.radar {
-   -webkit-animation-name:             rotate;
-   -webkit-animation-duration:         2s;
-   -webkit-animation-iteration-count:  infinite;
-   -webkit-animation-timing-function: linear;
-
-   -moz-animation-name:             rotate;
-   -moz-animation-duration:         2s;
-   -moz-animation-iteration-count:  infinite;
-   -moz-animation-timing-function: linear;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    background-image: url(radar_big.png);
-
-    width: 120px;
-    height: 120px;
-}
 
 #visual {
-    position: relative;
-}
-
-#dbg {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    height: 100px;
-    color: lime;
-}
-
-#visual {
-    background-image: url(canvas_bg.png);
     -moz-border-radius: 10px;
-    border: 1px solid lime;
     margin: 0 auto;
-    float: right;
 }
 
 h1,h3 {
     font-family: Verdana;
-    text-shadow: 0px 0px 12px #10b307;
+    text-shadow: 0px 0px 12px #000;
 
     text-transform: uppercase;
     font-size: 30px;
     font-weight: bold;
-    color: lime;
-
-    position: fixed;
-    left: 35%;
-    top: 10px;
+    color: #ffffff;
 
     z-index: 10;
 
+    position: fixed;
+    top: 10px;
+
 }
 h3{
-    position: fixed;
-    left: 34%;
-    top: 44px;
     font-size: 12px;
 }
 
@@ -183,30 +93,3 @@ h3{
 h2 {
     /*color: #fff;*/
 }
-
-.floor-active {
-    color: lime !important;
-}
-
-.floor-inactive {
-    color: #f08080  !important;
-}
-
-#controls {
-    float: left;
-    color: #fff;
-}
-.floor-switch, .navlink {
-    margin: 4px;
-    padding: 3px;
-    background-color: rgba(0,0,0,0.6);
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-}
-.floor-inactive:before{content:"[";}
-.floor-inactive:after{content:"]";}
-
-.navlink{
-    color: lime !important;
-};
