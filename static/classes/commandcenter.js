@@ -98,7 +98,11 @@ function CommandCenter() {
 
     function updateRadars( radarData ) {
 
-        var tmpRadars = {}, tmpFloors = {}, tmp = null;
+        // keep old radars ( special case for easterhegg, where not enough r0kets are presents
+        // to show the radars all the time
+        var tmpRadars = that.radars,
+            tmpFloors = {},
+            tmp = null;
 
         for( var Index in radarData ) {
 
