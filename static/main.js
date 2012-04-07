@@ -161,12 +161,28 @@ $(function() {
             // Draw nicknames to r0kets
 
             ctx.fillStyle = "#000000";
+            var bboxcheck = new Array();
+            bboxcheck[0] = new Array();
+            bboxcheck[1] = new Array();
+            var ps, pe;
             for( var r in r0kets ) {
-                
+
                 var pos = r0kets[ r ].getPosition();
                     map = map_canvas( offsetX+pos.X, offsetY+pos.Y );
 
                 if( r0kets[ r ].getNick() ) {
+                    for(i=0;i<bboxcheck[0].length;i++) {
+                        if (map.x >= bboxcheck[0][i].X && map.x <= bboxcheck[1][i].X) {
+                            map.x = map.x + 1;
+                        }
+                        if (map.y >= bboxcheck[0][i].Y && map.y <= bboxcheck[1][i].Y) {
+                            map.y = map.y + 10;
+                        }
+                    }
+                    ps = new Point (map.x, map.y);
+                    pe = new Point (map.x+50, map.y+10);
+                    bboxcheck[0].push(ps);
+                    bboxcheck[1].push(pe);
                     ctx.moveTo( map.x+7, map.y+3 );
                     ctx.fillText( r0kets[ r ].getNick() , map.x+7, map.y+3);
                 }
